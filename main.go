@@ -5,23 +5,12 @@ import (
 	"log"
 	"os"
 
-	"github.com/Nunu-Nugroho/golang-first-project/models"
-	"github.com/Nunu-Nugroho/golang-first-project/controllers/productcontroller"
-	"github.com/gin-gonic/gin"
+	"github.com/Nunu-Nugroho/golang-first-project/route"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	r := gin.Default()
-	models.ConnectDatabase()	
-
-	r.GET("/api/products", productcontroller.Index)
-	r.GET("/api/product/:id", productcontroller.Show)
-	r.POST("/api/product", productcontroller.Create)
-	r.PUT("/api/product/:id", productcontroller.Update)
-	r.DELETE("/api/product", productcontroller.Delete)
-	
-	// port := "1005" // Ganti dengan port yang diinginkan
+	r := route.SetupRouter()
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
