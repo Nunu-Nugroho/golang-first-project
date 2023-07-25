@@ -10,6 +10,7 @@ import (
 
 	"github.com/Nunu-Nugroho/golang-first-project/package"
 	"github.com/gin-gonic/gin"
+
 	// "golang.org/x/tools/go/packages"
 	minioPackage "github.com/minio/minio-go/v7"
 	// "github.com/minio/minio-go/v7/pkg/credentials"
@@ -17,7 +18,7 @@ import (
 
 func Test(c *gin.Context) {
 	// var client minio.MinioConnection
-	client, err := minio.MinioConnection()
+	client, err := packages.MinioConnection()
 	ctx := context.Background()
 	buckets, err := client.ListBuckets(ctx)
 	if err != nil {
@@ -43,7 +44,7 @@ func CreateImage(c *gin.Context) {
 
 	// Ambil nama folder dari form data "folder"
 	folder := c.PostForm("folder")
-	minioClient, err := minio.MinioConnection()
+	minioClient, err := packages.MinioConnection()
 	// Buat folder di dalam bucket (opsional, jika folder belum ada)
 	err = minioClient.MakeBucket(c, os.Getenv("MINIO_BUCKET_NAME"), minioPackage.MakeBucketOptions{
 		Region: "object",
@@ -87,7 +88,7 @@ func CreateImage(c *gin.Context) {
 func GetImage(c *gin.Context) {
 	imagePath := c.Param("path")
 	bucketName := os.Getenv("MINIO_BUCKET_NAME") // Ganti dengan nama bucket MinIO Anda
-	minioClient, err := minio.MinioConnection()
+	minioClient, err := packages.MinioConnection()
 	ctx := context.Background()
 	// Dapatkan objek dari bucket MinIO
 
@@ -110,7 +111,7 @@ func GetImage(c *gin.Context) {
 }
 
 func ListContent(c *gin.Context) {
-	minioClient, err := minio.MinioConnection()
+	minioClient, err := packages.MinioConnection()
 	// Dapatkan daftar objek di bucket di server MinIO
 	ctx := context.Background()
 	bucketName := os.Getenv("MINIO_BUCKET_NAME")
@@ -154,7 +155,8 @@ func ListContent(c *gin.Context) {
 func ListContentbyFolder(c *gin.Context) {
 	// Ambil nama folder dari parameter URL
 	folder := c.Param("folder")
-	minioClient, err := minio.MinioConnection()
+	bucketName := os.Getenv("MINIO_BUCKET_NAME")
+	minioClient, err := packages.MinioConnection()
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "list Content tidak ditemukan"})
 		return
@@ -165,7 +167,7 @@ func ListContentbyFolder(c *gin.Context) {
 	}
 
 	// Dapatkan daftar objek di bucket di server MinIO
-	bucketObjects := minioClient.ListObjects(c, "object", minioPackage.ListObjectsOptions{
+	bucketObjects := minioClient.ListObjects(c, bucketName, minioPackage.ListObjectsOptions{
 		Prefix:    folder,
 		Recursive: false,
 	})

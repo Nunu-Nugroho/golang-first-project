@@ -1,4 +1,4 @@
-package models
+package packages
 
 import (
 	"fmt"
@@ -9,6 +9,7 @@ import (
 	// "gorm.io/driver/mysql"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
+	"github.com/Nunu-Nugroho/golang-first-project/models"
 )
 
 var DB *gorm.DB
@@ -33,7 +34,8 @@ func ConnectDatabase() {
 	}
 
 	// Migrate the schema
-	err = db.AutoMigrate(&Product{})
+	var Product models.Product
+	err = db.AutoMigrate(&Product);
 	if err != nil {
 		log.Fatal("failed to migrate schema, got error", err)
 	}

@@ -1,5 +1,5 @@
 // minio/minio.go
-package minio
+package packages
 
 import (
 	"log"

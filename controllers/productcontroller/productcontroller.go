@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/Nunu-Nugroho/golang-first-project/models"
+	"github.com/Nunu-Nugroho/golang-first-project/package"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -13,7 +14,7 @@ import (
 func Index(c *gin.Context) {
 	var products []models.Product
 
-	models.DB.Find(&products)
+	packages.DB.Find(&products)
 	c.JSON(http.StatusOK, gin.H{"product": products})
 }
 
@@ -21,7 +22,7 @@ func Show(c *gin.Context) {
 	var product models.Product
 	id := c.Param("id")
 
-	if err := models.DB.First(&product, id).Error; err != nil {
+	if err := packages.DB.First(&product, id).Error; err != nil {
 		switch err {
 		case gorm.ErrRecordNotFound:
 			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"message": "Data tidak ditemukan"})
@@ -42,7 +43,7 @@ func Create(c *gin.Context) {
 		return
 	}
 
-	models.DB.Create(&product)
+	packages.DB.Create(&product)
 	c.JSON(http.StatusOK, gin.H{"product": product})
 }
 
@@ -55,7 +56,7 @@ func Update(c *gin.Context) {
 	// 	return
 	// }
 
-	// if models.DB.Model(&product).Where("id = ?", id).Updates(&product).RowsAffected == 0 {
+	// if packages.DB.Model(&product).Where("id = ?", id).Updates(&product).RowsAffected == 0 {
 	// 	c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "gagal update product"})
 	// 	return
 	// }
@@ -69,7 +70,7 @@ func Update(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
-	if models.DB.Model(&product).Where("id = ?", id).Updates(&product).RowsAffected == 0 {
+	if packages.DB.Model(&product).Where("id = ?", id).Updates(&product).RowsAffected == 0 {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "tidak dapat mengupdate product"})
 		return
 	}
@@ -89,7 +90,7 @@ func Delete(c *gin.Context) {
 	// id, _ := strconv.ParseInt(input["id"], 10, 64)
 	id, _ := strconv.Atoi(string(input.Id))
 	// id, _ := input.Id.Int64()
-	if models.DB.Delete(&product, id).RowsAffected == 0{
+	if packages.DB.Delete(&product, id).RowsAffected == 0{
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "gagal hapus data"})
 		return
 	}
