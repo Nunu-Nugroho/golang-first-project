@@ -14,18 +14,6 @@ import (
 var DB *gorm.DB
 
 func ConnectDatabase() {
-	// dbUser := "root"
-	// dbPass := "dbpass"
-	// dbName := "go_api"
-	// dbHost := "172.17.0.1"
-	// dbPort := "3306"
-	// database, err := gorm.Open(mysql.Open(dbUser+":"+dbPass+"@tcp("+dbHost+":"+dbPort+")/"+dbName+"?tls=false"))
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// database.AutoMigrate(&Product{})
-
-	// DB =database
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")

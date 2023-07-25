@@ -93,5 +93,5 @@ func Delete(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "gagal hapus data"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message": "hapu data berhasil"})
+	c.JSON(http.StatusOK, gin.H{"message": "hapus data berhasil"})
 }
