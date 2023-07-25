@@ -1,10 +1,9 @@
-package route
+package router
 
 import (
 	"github.com/Nunu-Nugroho/golang-first-project/models"
 	"github.com/Nunu-Nugroho/golang-first-project/package"
 	"github.com/Nunu-Nugroho/golang-first-project/controllers/productcontroller"
-	"github.com/Nunu-Nugroho/golang-first-project/controllers/objectcontroller"
 	"github.com/Nunu-Nugroho/golang-first-project/controllers/miniocontroller"
 	"github.com/gin-gonic/gin"
 )

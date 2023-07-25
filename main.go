@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
-	"github.com/Nunu-Nugroho/golang-first-project/route"
+	"github.com/Nunu-Nugroho/golang-first-project/router"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	r := route.SetupRouter()
+	r := router.SetupRouter()
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
