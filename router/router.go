@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/Nunu-Nugroho/golang-first-project/controllers/miniocontroller"
+	// "github.com/Nunu-Nugroho/golang-first-project/controllers/miniocontroller"
 	"github.com/Nunu-Nugroho/golang-first-project/controllers/productcontroller"
 	// "github.com/Nunu-Nugroho/golang-first-project/models"
 	"github.com/Nunu-Nugroho/golang-first-project/package"
@@ -11,7 +11,7 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	packages.ConnectDatabase()	
-	packages.MinioConnection()
+	// packages.MinioConnection()
 
 	r.GET("/api/products", productcontroller.Index)
 	r.GET("/api/product/:id", productcontroller.Show)
@@ -21,10 +21,10 @@ func SetupRouter() *gin.Engine {
 
 	
 	// minio
-	r.GET("/test-minio", miniocontroller.Test)
-	r.POST("/upload-image", miniocontroller.CreateImage)
-	r.GET("/image/:path", miniocontroller.GetImage)
-	r.GET("/list-contents", miniocontroller.ListContent)
-	r.GET("/list-contents/:folder", miniocontroller.ListContentbyFolder)
+	// r.GET("/test-minio", miniocontroller.Test)
+	// r.POST("/upload-image", miniocontroller.CreateImage)
+	// r.GET("/image/:path", miniocontroller.GetImage)
+	// r.GET("/list-contents", miniocontroller.ListContent)
+	// r.GET("/list-contents/:folder", miniocontroller.ListContentbyFolder)
 	return r		
 }

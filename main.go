@@ -6,21 +6,33 @@ import (
 	"os"
 
 	"github.com/Nunu-Nugroho/golang-first-project/router"
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
 func main() {
+	// Set mode to "release" for better performance in production
+	gin.SetMode(gin.ReleaseMode)
+
+	// Setup Gin router
 	r := router.SetupRouter()
+
+	// Load environment variables from .env file
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
-	}	
+		log.Fatalf("Error loading .env file: %v", err)
+	}
+
+	// Get the port from the environment variables
 	port := os.Getenv("ACTIVE_PORT")
+	if port == "" {
+		log.Fatal("ACTIVE_PORT is not set in the .env file")
+	}
 	fmt.Println("Port:", port)
 
-	if err := r.Run(":" + port); err != nil {
-		// Handle error jika terjadi
-		panic(err)
+	// Run the server
+	err = r.Run(":" + port)
+	if err != nil {
+		log.Fatalf("Error starting the server: %v", err)
 	}
-	
 }
